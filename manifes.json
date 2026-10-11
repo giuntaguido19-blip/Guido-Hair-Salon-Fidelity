@@ -1,0 +1,13 @@
+
+{
+  "id": "/",
+  "name": "Guido Hair Salon",
+  "short_name": "Guido Hair",
+  "description": "L'app ufficiale di Guido Hair Salon",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "orientation": "portrait"
+}
