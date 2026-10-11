@@ -1,0 +1,36 @@
+# Guido Hair Salon — progetto app iPhone e Android
+
+Questo archivio prepara il sito attuale come progetto iniziale per una app mobile tramite Capacitor.
+
+## Importante
+Questo è un progetto sorgente per la compilazione, non sono ancora i file finali `.ipa` per iPhone o `.aab` per Google Play. Per generare e firmare le app servono gli strumenti di sviluppo e gli account store.
+
+## Cosa contiene
+- `www/`: file web attuali dell'app (HTML, manifest, service worker, logo)
+- `package.json`: dipendenze Capacitor
+- `capacitor.config.json`: identificativo e nome dell'app
+
+## Come generare i progetti nativi
+Da un computer con Node.js installato, estrarre questa cartella e aprire il terminale al suo interno:
+
+1. `npm install`
+2. `npx cap add android`
+3. `npx cap add ios`
+4. `npx cap sync`
+5. Per Android: `npx cap open android` (richiede Android Studio)
+6. Per iPhone: `npx cap open ios` (richiede macOS e Xcode)
+
+Da Android Studio si genera un Android App Bundle (`.aab`) firmato per Google Play.
+Da Xcode si configura la firma e si carica la build su App Store Connect.
+
+## Prima della pubblicazione
+- Sostituire l'icona provvisoria con icone store in tutti i formati richiesti.
+- Preparare screenshot, descrizione, categoria, età e URL privacy policy.
+- Verificare su dispositivi reali registrazione, QR, gestione e funzionamento offline.
+- Aggiungere un backend sicuro per sincronizzare clienti e bollini tra dispositivi.
+- Implementare notifiche push reali se necessarie.
+- Verificare il sistema di accesso amministratore: la protezione locale della demo non basta per proteggere dati personali in un'app pubblica.
+- Aggiungere informativa privacy e base giuridica per il trattamento dei dati, compresi i numeri di telefono.
+
+## Limite della versione attuale
+L'app web attuale salva i dati localmente nel browser/dispositivo. Non condivide automaticamente gli stessi clienti fra il telefono del titolare e quelli dei clienti; le notifiche remote non sono già configurate. Prima di usarla in produzione, questi aspetti vanno sviluppati e testati.

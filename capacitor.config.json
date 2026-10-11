@@ -1,0 +1,9 @@
+{
+  "appId": "it.guidohairsalon.fidelity",
+  "appName": "Guido Hair Salon",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
