@@ -1,61 +1,347 @@
+
 <!doctype html>
 <html lang="it">
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = 'https://cmslipkgekqdgahsjxwk.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_X43dJ4nGagjQ5l2mYJdwig_4Ks72LzN';
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Guido Hair">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./logo.jpeg">
-<title>Guido Hair Salon · Fedeltà</title>
+<meta name="apple-mobile-web-app-title" content="Guido Hair Salon">
+<title>Guido Hair Salon Fidelity</title>
 <style>
-:root{--bg:#101010;--panel:#1d1d1d;--gold:#c9a86a;--muted:#b4ada2}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,sans-serif}header{text-align:center;padding:22px 14px 8px}header img{width:95%;max-width:420px;height:92px;object-fit:contain;background:#fff;border-radius:10px;padding:7px}header p{font-size:11px;letter-spacing:2px;color:var(--gold)}main{max-width:650px;margin:auto;padding:10px 15px 25px}.card{background:linear-gradient(145deg,#252525,#161616);border:1px solid #383838;border-radius:18px;padding:19px;margin-bottom:14px}h1{font-size:25px;margin:4px 0 10px}h2{font-size:17px;margin:0 0 12px}.sub{font-size:13px;line-height:1.5;color:var(--muted)}label{font-size:12px;color:#ded6c9}.field{width:100%;display:block;background:#101010;color:white;border:1px solid #4a4a4a;border-radius:10px;padding:13px;margin:6px 0 12px;font:inherit}button{width:100%;border:0;border-radius:12px;background:var(--gold);color:#16120b;font-size:14px;font-weight:750;padding:14px;margin:4px 0;cursor:pointer}.secondary{background:#282828;color:#eee;border:1px solid #444}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.count{font-size:32px;font-weight:800}.pill{border:1px solid #65532f;color:var(--gold);padding:5px 9px;border-radius:50px;font-size:11px}.stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:18px 0}.stamp{aspect-ratio:1;border:1px solid #666;border-radius:50%;display:grid;place-items:center;color:#aaa;background:#101010;font-weight:700}.stamp.done{background:var(--gold);color:#111;border-color:var(--gold)}.stamp.done:after{content:"✓";font-size:22px}.stamp.done span{display:none}.notice{background:#2b2419;border:1px solid #65502d;color:#f5e8d0;padding:12px;border-radius:12px;font-size:13px;line-height:1.5}.hidden{display:none!important}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.customer{padding:13px 0;border-top:1px solid #393939}.customer strong{display:block}.customer small{color:#b7b0a5;line-height:1.6}.qrwrap{display:flex;justify-content:center;background:white;border-radius:14px;padding:14px;margin:15px auto;max-width:250px;min-height:210px;align-items:center}.qrwrap img{max-width:100%;image-rendering:pixelated}.qrtext{text-align:center;font-size:12px;color:#ddd}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:650px;margin:auto;padding:0 15px 20px}.tabs button{background:#252525;color:#ccc;border:1px solid #444}.tabs button.active{background:var(--gold);color:#111}footer{text-align:center;color:#777;font-size:11px;padding:8px 15px 25px}
-</style></head><body><header><img src="logo.jpeg" alt="Guido Hair Salon"><p>CARTA FEDELTÀ DIGITALE</p></header>
+*{box-sizing:border-box}
+body{margin:0;background:#111;color:#f5f5f5;font-family:Arial,sans-serif}
+header{text-align:center;padding:25px 12px 15px;border-bottom:1px solid #383838}
+h1{font-size:25px;margin:0;color:#d8b36a}
+header p{margin:7px 0 0;color:#bbb}
+nav{display:flex;gap:8px;justify-content:center;padding:14px 8px;flex-wrap:wrap}
+button{background:#d8b36a;color:#111;border:0;border-radius:9px;padding:12px 15px;font-size:15px;font-weight:bold;cursor:pointer}
+nav button{background:#292929;color:#fff}
+nav button.active{background:#d8b36a;color:#111}
+main{max-width:520px;margin:auto;padding:10px 16px 40px}
+.panel{background:#1d1d1d;border:1px solid #333;border-radius:15px;padding:19px;margin-bottom:16px}
+h2{margin:0 0 15px;font-size:21px;color:#d8b36a}
+p{line-height:1.45}
+label{display:block;margin:12px 0 6px;color:#ddd}
+input{width:100%;padding:13px;border-radius:8px;border:1px solid #555;background:#101010;color:#fff;font-size:16px}
+.full{width:100%;margin-top:16px}
+.small{color:#aaa;font-size:13px}
+.hidden{display:none!important}
+.message{padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
+.error{background:#4b2020;color:#ffdada}
+.success{background:#183b29;color:#d5ffe5}
+#stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:18px 0}
+.stamp{border:2px solid #d8b36a;border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:22px;color:#d8b36a}
+.stamp.filled{background:#d8b36a;color:#111}
+#qr{display:flex;justify-content:center;background:white;padding:12px;margin:16px auto;width:max-content;max-width:100%;border-radius:8px}
+.customer{border-bottom:1px solid #444;padding:12px 0;overflow-wrap:anywhere}
+.customer:last-child{border-bottom:0}
+</style>
+</head>
+<body>
+<header>
+<h1>GUIDO HAIR SALON</h1>
+<p>La tua carta fedeltà digitale</p>
+</header>
+
+<nav>
+<button class="active" data-page="register">Registrati</button>
+<button data-page="card">La mia tessera</button>
+<button data-page="admin">Area titolare</button>
+</nav>
+
 <main>
-<section id="customerPage">
-<div class="card"><div class="sub" style="color:var(--gold)">BENVENUTO NEL PROGRAMMA FEDELTÀ</div><h1>La tua fedeltà viene premiata.</h1><p class="sub">Ogni 17 € di spesa = 1 bollino. Con 10 bollini ricevi un omaggio.</p><h2>Registrati o apri la tua tessera</h2><label>Nome</label><input class="field" id="regFirstName" autocomplete="given-name" placeholder="Mario"><label>Cognome</label><input class="field" id="regLastName" autocomplete="family-name" placeholder="Rossi"><label>Numero di telefono</label><input class="field" id="regPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="333 1234567"><button id="register">Crea la mia tessera</button><p class="sub">Inserisci nome, cognome e numero di telefono per gestire la tua carta fedeltà. Prima della pubblicazione aggiungi un'informativa privacy completa.</p></div>
-<div class="card hidden" id="myCard"><div class="row"><div><div class="sub">LA TUA TESSERA</div><div class="count"><span id="count">0</span><span class="sub"> / 10 bollini</span></div></div><span class="pill" id="status">In corso</span></div><div class="stamps" id="stamps"></div><div class="notice" id="message"></div><h2 style="margin-top:18px">Il tuo QR code</h2><p class="sub">Mostralo al salone quando vuoi registrare una spesa idonea.</p><div class="qrwrap" id="qr"><span style="color:#333">Generazione QR…</span></div><div class="qrtext" id="codeLabel"></div></div>
+<section id="register" class="page">
+<div class="panel">
+<h2>Registrazione cliente</h2>
+<p>Registrati per ricevere la tua carta fedeltà digitale.</p>
+<form id="registerForm">
+<label for="firstName">Nome</label>
+<input id="firstName" autocomplete="given-name" required>
+<label for="lastName">Cognome</label>
+<input id="lastName" autocomplete="family-name" required>
+<label for="phone">Numero di telefono</label>
+<input id="phone" type="tel" autocomplete="tel" required>
+<button class="full" type="submit">Crea la mia tessera</button>
+</form>
+<div id="registerMessage" aria-live="polite"></div>
+</div>
 </section>
-<section id="adminPage" class="hidden">
-<div class="card" id="adminLogin"><h1>Area riservata</h1><p class="sub">Solo il titolare può accedere alla gestione del salone.</p>
-<div id="adminSetup" class="hidden"><label>Crea la password amministratore</label><input class="field" id="newAdminPassword" type="password" autocomplete="new-password" placeholder="Almeno 8 caratteri"><label>Conferma password</label><input class="field" id="confirmAdminPassword" type="password" autocomplete="new-password" placeholder="Ripeti la password"><button id="saveAdminPassword">Imposta password</button></div>
-<div id="adminSignIn" class="hidden"><label>Password amministratore</label><input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Inserisci la password"><button id="adminUnlock">Accedi alla gestione</button></div><p class="sub">Scegli una password che non usi per altri account.</p></div>
-<div id="adminContent" class="hidden"><div class="card"><div class="row"><h1>Gestione salone</h1><button id="adminLock" class="secondary" style="width:auto">Blocca</button></div><p class="sub">Le nuove registrazioni compaiono qui su questo dispositivo. Per ricevere notifiche sul tuo iPhone quando i clienti si registrano da altri telefoni serve collegare l'app a un database online e attivare le notifiche push.</p><button id="enableNotifications" class="secondary">Attiva notifiche su questo dispositivo</button><div class="notice" id="notifyState">Notifiche non configurate.</div></div>
-<div class="card"><div class="row"><h2>Nuovi clienti</h2><span class="pill" id="total">0</span></div><div id="customers"></div></div>
-<div class="card"><h2>Scansiona / registra bollino</h2><p class="sub">Inserisci il codice letto dal QR del cliente. Un bollino viene assegnato per ogni 17 € di spesa idonea registrata.</p><label>Codice cliente</label><input class="field" id="scanCode" placeholder="GHS-ABC123"><label>Importo spesa (€)</label><input class="field" id="amount" type="number" min="17" step="0.01" value="17"><button id="addStamp">Conferma spesa e bollino</button><p class="sub">Questa versione demo assegna un bollino per ogni registrazione idonea, non più di un bollino per singola operazione. Il QR contiene il codice tessera.</p></div></div>
+
+<section id="card" class="page hidden">
+<div class="panel">
+<h2>La mia tessera</h2>
+<label for="cardCode">Codice della tessera</label>
+<input id="cardCode" placeholder="Es. GHS-...">
+<button id="findCard" class="full">Visualizza tessera</button>
+<div id="cardMessage" aria-live="polite"></div>
+<div id="cardDetails" class="hidden">
+<h3 id="customerName"></h3>
+<p id="stampCount"></p>
+<div id="stamps"></div>
+<div id="qr"></div>
+<p class="small">Mostra questa tessera al titolare del salone.</p>
+</div>
+</div>
 </section>
-</main><nav class="tabs"><button class="active" data-page="customerPage">👤 Tessera cliente</button><button data-page="adminPage">✂️ Gestione salone</button></nav><footer>GUIDO HAIR SALON · Grazie per la tua fiducia</footer>
+
+<section id="admin" class="page hidden">
+<div class="panel" id="loginPanel">
+<h2>Accesso titolare</h2>
+<p class="small">Accedi con l'account autorizzato del salone.</p>
+<form id="loginForm">
+<label for="email">Email</label>
+<input id="email" type="email" autocomplete="username" required>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<button class="full" type="submit">Accedi</button>
+</form>
+<div id="loginMessage" aria-live="polite"></div>
+</div>
+
+<div class="panel hidden" id="adminPanel">
+<h2>Gestione clienti</h2>
+<button id="refreshCustomers">Aggiorna elenco clienti</button>
+<button id="logout" style="margin-left:5px">Esci</button>
+<div id="adminMessage" aria-live="polite"></div>
+<div id="customerList"></div>
+</div>
+
+<div class="panel hidden" id="stampPanel">
+<h2>Aggiungi bollini</h2>
+<p class="small">Inserisci il codice della tessera e l'importo della spesa. Ogni 17 € valgono un bollino.</p>
+<label for="stampCode">Codice tessera</label>
+<input id="stampCode" placeholder="GHS-..." required>
+<label for="amount">Importo della spesa (€)</label>
+<input id="amount" type="number" min="17" step="0.01" placeholder="17" required>
+<button id="addStamp" class="full">Conferma bollini</button>
+<div id="stampMessage" aria-live="polite"></div>
+</div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-const KEY='ghs_customers_v2';let db={customers:[],events:[]};try{db=JSON.parse(localStorage.getItem(KEY))||db}catch(e){}const $=x=>document.getElementById(x),save=()=>localStorage.setItem(KEY,JSON.stringify(db));
-function qr(code){$('qr').innerHTML='';if(window.QRCode)new QRCode($('qr'),{text:code,width:210,height:210,colorDark:'#111111',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});else $('qr').innerHTML='<span style="color:#333">QR non disponibile senza connessione</span>';$('codeLabel').textContent='Codice tessera: '+code}
-function draw(c){$('myCard').classList.remove('hidden');$('count').textContent=c.stamps;$('status').textContent=c.stamps===10?'Premio pronto':'In corso';$('message').textContent=c.stamps===10?'Complimenti! Mostra il QR al salone per ritirare il tuo omaggio.':`Ti mancano ${10-c.stamps} bollini per il tuo omaggio.`;$('stamps').innerHTML='';for(let i=0;i<10;i++){let s=document.createElement('div');s.className='stamp'+(i<c.stamps?' done':'');s.innerHTML='<span>'+(i+1)+'</span>';$('stamps').append(s)}qr(c.code);localStorage.setItem('ghs_current_customer',c.code)}
-function renderAdmin(){$('total').textContent=db.customers.length+' clienti';$('customers').innerHTML=db.customers.slice().reverse().map(c=>`<div class="customer"><strong>${esc(c.firstName||c.name||'')} ${esc(c.lastName||'')}</strong><small>Telefono: ${esc(c.phone||'Non indicato')}<br>Codice: ${c.code} · ${c.stamps}/10 bollini<br>Registrato: ${new Date(c.created).toLocaleString('it-IT')}</small><button data-select="${c.code}" class="secondary">Seleziona codice</button></div>`).join('')||'<p class="sub">Nessuna registrazione ancora.</p>'}
-function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-$('register').onclick=()=>{let firstName=$('regFirstName').value.trim(),lastName=$('regLastName').value.trim(),phone=$('regPhone').value.trim();if(!firstName||!lastName||!phone)return alert('Compila nome, cognome e numero di telefono.');if(!/^[+0-9 ()-]{7,20}$/.test(phone))return alert('Inserisci un numero di telefono valido.');let normalized=(firstName+' '+lastName).toLocaleLowerCase('it-IT');let existing=db.customers.find(c=>((c.firstName||c.name||'')+' '+(c.lastName||'')).toLocaleLowerCase('it-IT')===normalized);if(existing){draw(existing);return alert('Esiste già una tessera con questo nome e cognome. Se non è tua, chiedi assistenza al salone.')}let c={firstName,lastName,phone,code:'GHS-'+Math.random().toString(36).slice(2,8).toUpperCase(),stamps:0,created:new Date().toISOString()};db.customers.push(c);db.events.unshift({type:'registration',code:c.code,date:new Date().toISOString()});save();renderAdmin();draw(c);alert('Registrazione completata! Salva il QR della tua tessera.')}
-$('customers').onclick=e=>{let code=e.target.dataset.select;if(code){$('scanCode').value=code;document.querySelectorAll('.tabs button')[1].click()}}
-$('addStamp').onclick=()=>{let code=$('scanCode').value.trim().toUpperCase(),c=db.customers.find(x=>x.code===code),amount=Number($('amount').value);if(!c)return alert('Cliente non trovato.');if(amount<17)return alert('La spesa deve essere di almeno 17 €.');if(c.stamps>=10)return alert('Tessera completa: prima riscatta il premio.');c.stamps++;db.events.unshift({type:'stamp',code,date:new Date().toISOString(),amount});save();renderAdmin();alert('Bollino aggiunto a '+c.name+' ('+c.stamps+'/10).');if(localStorage.getItem('ghs_current_customer')===code)draw(c)}
-$('enableNotifications').onclick=async()=>{if(!('Notification'in window))return alert('Questo browser non supporta le notifiche web.');let p=await Notification.requestPermission();$('notifyState').textContent=p==='granted'?'Notifiche autorizzate su questo dispositivo. Nota: la notifica arriva solo quando questa app rileva una nuova registrazione su questo stesso dispositivo. Per notifiche remote serve un backend push.':'Permesso notifiche non concesso.';if(p==='granted')new Notification('Guido Hair Salon',{body:'Notifiche attivate su questo dispositivo.'})}
-const ADMIN_HASH_KEY='ghs_admin_password_hash_v1';
-async function hashPassword(password){const data=new TextEncoder().encode(password);const digest=await crypto.subtle.digest('SHA-256',data);return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('')}
-function showAdminLogin(){$('adminLogin').classList.remove('hidden');$('adminContent').classList.add('hidden');if(localStorage.getItem(ADMIN_HASH_KEY)){$('adminSetup').classList.add('hidden');$('adminSignIn').classList.remove('hidden')}else{$('adminSignIn').classList.add('hidden');$('adminSetup').classList.remove('hidden')}}
-$('saveAdminPassword').onclick=async()=>{let p=$('newAdminPassword').value,confirm=$('confirmAdminPassword').value;if(p.length<8)return alert('La password deve contenere almeno 8 caratteri.');if(p!==confirm)return alert('Le password non coincidono.');localStorage.setItem(ADMIN_HASH_KEY,await hashPassword(p));$('newAdminPassword').value='';$('confirmAdminPassword').value='';unlockAdmin()};
-$('adminUnlock').onclick=async()=>{let p=$('adminPassword').value,stored=localStorage.getItem(ADMIN_HASH_KEY);if(stored&&await hashPassword(p)===stored){$('adminPassword').value='';unlockAdmin()}else alert('Password non corretta.')};
-function unlockAdmin(){$('adminLogin').classList.add('hidden');$('adminContent').classList.remove('hidden');renderAdmin()}
-$('adminLock').onclick=()=>showAdminLogin();
-document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('active',x===b));['customerPage','adminPage'].forEach(id=>$(id).classList.toggle('hidden',id!==b.dataset.page));if(b.dataset.page==='adminPage')showAdminLogin()});
-const last=localStorage.getItem('ghs_current_customer');if(last){let c=db.customers.find(x=>x.code===last);if(c){$('regFirstName').value=c.firstName||((c.name||'').split(' ')[0]||'');$('regLastName').value=c.lastName||((c.name||'').split(' ').slice(1).join(' ')||'');draw(c)}}renderAdmin();
-if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
-</script></body></html>
+const SUPABASE_URL = "https://cmslipkgekqdgahsjxwk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_X43dJ4nGagjQ5l2mYJdwig_4Ks72LzN";
+const API_URL = SUPABASE_URL + "/functions/v1/fidelity-api";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentSession = null;
+
+function showMessage(id, text, ok=false) {
+  const el = document.getElementById(id);
+  el.className = "message " + (ok ? "success" : "error");
+  el.textContent = text;
+}
+function clearMessage(id) {
+  const el = document.getElementById(id);
+  el.textContent = "";
+  el.className = "";
+}
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
+  document.getElementById(page).classList.remove("hidden");
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === page);
+  });
+}
+document.querySelectorAll("nav button").forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.page));
+});
+
+async function apiRequest(payload, authenticated=false) {
+  const headers = {
+    "Content-Type": "application/json",
+    "apikey": SUPABASE_KEY
+  };
+  if (authenticated) {
+    if (!currentSession) throw new Error("Effettua prima l'accesso.");
+    headers.Authorization = "Bearer " + currentSession.access_token;
+  }
+  const response = await fetch(API_URL, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload)
+  });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok || result.error) {
+    throw new Error(result.error || "Errore del server (" + response.status + ").");
+  }
+  return result;
+}
+
+function getCustomer(result) {
+  return result.customer || result.data || result;
+}
+function getCode(customer) {
+  return customer.code || customer.customer_code || "";
+}
+function getStamps(customer) {
+  return Number(customer.stamps || 0);
+}
+
+function renderCard(customer) {
+  const code = getCode(customer);
+  const stamps = getStamps(customer);
+  document.getElementById("cardDetails").classList.remove("hidden");
+  document.getElementById("customerName").textContent =
+    [customer.name, customer.last_name].filter(Boolean).join(" ") || "Cliente";
+  document.getElementById("stampCount").textContent =
+    "Bollini: " + stamps + " su 10";
+  const holder = document.getElementById("stamps");
+  holder.replaceChildren();
+  for (let i = 0; i < 10; i++) {
+    const circle = document.createElement("div");
+    circle.className = "stamp" + (i < stamps ? " filled" : "");
+    circle.textContent = i < stamps ? "★" : "·";
+    holder.appendChild(circle);
+  }
+  const qr = document.getElementById("qr");
+  qr.replaceChildren();
+  if (window.QRCode && code) {
+    new QRCode(qr, {text: code, width: 180, height: 180});
+  } else {
+    qr.textContent = code;
+  }
+  document.getElementById("cardCode").value = code;
+}
+
+document.getElementById("registerForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  clearMessage("registerMessage");
+  const button = event.submitter;
+  button.disabled = true;
+  try {
+    const result = await apiRequest({
+      action: "register",
+      name: document.getElementById("firstName").value.trim(),
+      last_name: document.getElementById("lastName").value.trim(),
+      phone: document.getElementById("phone").value.trim()
+    });
+    const customer = getCustomer(result);
+    const code = getCode(customer);
+    if (!code) throw new Error("Registrazione ricevuta, ma il codice tessera non è arrivato.");
+    localStorage.setItem("ghs_customer_code", code);
+    renderCard(customer);
+    showMessage("registerMessage", "Registrazione completata! La tua tessera è pronta.", true);
+    showPage("card");
+  } catch (error) {
+    showMessage("registerMessage", error.message || "Impossibile completare la registrazione.");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+document.getElementById("findCard").addEventListener("click", async () => {
+  clearMessage("cardMessage");
+  document.getElementById("cardDetails").classList.add("hidden");
+  const code = document.getElementById("cardCode").value.trim();
+  if (!code) {
+    showMessage("cardMessage", "Inserisci il codice della tessera.");
+    return;
+  }
+  try {
+    const result = await apiRequest({action: "card", code});
+    renderCard(getCustomer(result));
+  } catch (error) {
+    showMessage("cardMessage", error.message || "Tessera non trovata.");
+  }
+});
+
+document.getElementById("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  clearMessage("loginMessage");
+  try {
+    const {data, error} = await supabaseClient.auth.signInWithPassword({
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("password").value
+    });
+    if (error) throw error;
+    currentSession = data.session;
+    document.getElementById("loginPanel").classList.add("hidden");
+    document.getElementById("adminPanel").classList.remove("hidden");
+    document.getElementById("stampPanel").classList.remove("hidden");
+    await loadCustomers();
+  } catch (error) {
+    showMessage("loginMessage", error.message || "Accesso non riuscito.");
+  }
+});
+
+async function loadCustomers() {
+  clearMessage("adminMessage");
+  const list = document.getElementById("customerList");
+  list.textContent = "Caricamento clienti...";
+  try {
+    const result = await apiRequest({action: "admin_list"}, true);
+    const customers = Array.isArray(result) ? result :
+      (result.customers || result.data || []);
+    list.replaceChildren();
+    if (!customers.length) {
+      list.textContent = "Nessun cliente trovato.";
+      return;
+    }
+    customers.forEach(customer => {
+      const item = document.createElement("div");
+      item.className = "customer";
+      const name = document.createElement("strong");
+      name.textContent = [customer.name, customer.last_name].filter(Boolean).join(" ") || "Cliente";
+      const details = document.createElement("p");
+      details.className = "small";
+      details.textContent =
+        "Telefono: " + (customer.phone || "—") +
+        " · Bollini: " + getStamps(customer) + "/10" +
+        " · Codice: " + getCode(customer);
+      const selectButton = document.createElement("button");
+      selectButton.textContent = "Seleziona tessera";
+      selectButton.addEventListener("click", () => {
+        document.getElementById("stampCode").value = getCode(customer);
+        document.getElementById("amount").focus();
+      });
+      item.append(name, details, selectButton);
+      list.appendChild(item);
+    });
+  } catch (error) {
+    list.textContent = "";
+    showMessage("adminMessage", error.message || "Impossibile caricare i clienti.");
+  }
+}
+document.getElementById("refreshCustomers").addEventListener("click", loadCustomers);
+
+document.getElementById("addStamp").addEventListener("click", async () => {
+  clearMessage("stampMessage");
+  const code = document.getElementById("stampCode").value.trim();
+  const amount = Number(document.getElementById("amount").value);
+  if (!code || !Number.isFinite(amount) || amount < 17) {
+    showMessage("stampMessage", "Inserisci un codice e una spesa di almeno 17 €.");
+    return;
+  }
+  try {
+    const result = await apiRequest({
+      action: "add_stamp",
+      code,
+      amount
+    }, true);
+    showMessage("stampMessage", "Operazione completata. " +
+      (result.message || "Aggiorna l'elenco per verificare i bollini."), true);
+    await loadCustomers();
+  } catch (error) {
+    showMessage("stampMessage", error.message || "Impossibile aggiungere i bollini.");
+  }
+});
+
+document.getElementById("logout").addEventListener("click", async () => {
+  await supabaseClient.auth.signOut();
+  currentSession = null;
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
+  document.getElementById("stampPanel").classList.add("hidden");
+  document.getElementById("password").value = "";
+});
+
+const savedCode = localStorage.getItem("ghs_customer_code");
+if (savedCode) document.getElementById("cardCode").value = savedCode;
+</script>
+</body>
+</html>
