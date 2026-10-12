@@ -2,7 +2,14 @@
 <html lang="it">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
+<script>
+const SUPABASE_URL = 'https://cmslipkgekqdgahsjxwk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_X43dJ4nGagjQ5l2mYJdwig_4Ks72LzN';
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
