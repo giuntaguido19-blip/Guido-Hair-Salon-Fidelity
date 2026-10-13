@@ -1,186 +1,397 @@
-
 <!doctype html>
 <html lang="it">
 <head>
-  <img src="./logo.jpeg" alt="Logo Guido Hair Salon" style="display:block;width:120px;height:auto;margin:0 auto 12px;">
-<link rel="icon" type="image/jpeg" href="logo.jpeg">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#111111">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Guido Hair Salon">
-<title>Guido Hair Salon Fidelity</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#111;color:#f5f5f5;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 12px 15px;border-bottom:1px solid #383838}
-h1{font-size:25px;margin:0;color:#d8b36a}
-header p{margin:7px 0 0;color:#bbb}
-nav{display:flex;gap:8px;justify-content:center;padding:14px 8px;flex-wrap:wrap}
-button{background:#d8b36a;color:#111;border:0;border-radius:9px;padding:12px 15px;font-size:15px;font-weight:bold;cursor:pointer}
-nav button{background:#292929;color:#fff}
-nav button.active{background:#d8b36a;color:#111}
-main{max-width:520px;margin:auto;padding:10px 16px 40px}
-.panel{background:#1d1d1d;border:1px solid #333;border-radius:15px;padding:19px;margin-bottom:16px}
-h2{margin:0 0 15px;font-size:21px;color:#d8b36a}
-p{line-height:1.45}
-label{display:block;margin:12px 0 6px;color:#ddd}
-input{width:100%;padding:13px;border-radius:8px;border:1px solid #555;background:#101010;color:#fff;font-size:16px}
-.full{width:100%;margin-top:16px}
-.small{color:#aaa;font-size:13px}
-.hidden{display:none!important}
-.message{padding:12px;border-radius:8px;margin-top:12px;overflow-wrap:anywhere}
-.error{background:#4b2020;color:#ffdada}
-.success{background:#183b29;color:#d5ffe5}
-#stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:18px 0}
-.stamp{border:2px solid #d8b36a;border-radius:50%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:22px;color:#d8b36a}
-.stamp.filled{background:#d8b36a;color:#111}
-#qr{display:flex;justify-content:center;background:white;padding:12px;margin:16px auto;width:max-content;max-width:100%;border-radius:8px}
-.customer{border-bottom:1px solid #444;padding:12px 0;overflow-wrap:anywhere}
-.customer:last-child{border-bottom:0}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Guido Hair Salon">
+
+  <title>Guido Hair Salon Fidelity</title>
+
+  <!-- Icona del sito e icona per la schermata Home -->
+  <link rel="icon" type="image/jpeg" href="./logo.jpeg">
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #111;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 25px 12px 15px;
+      border-bottom: 1px solid #383838;
+    }
+
+    .salon-logo {
+      display: block;
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      margin: 0 auto 12px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 25px;
+      margin: 0;
+      color: #d8b36a;
+    }
+
+    header p {
+      margin: 7px 0 0;
+      color: #bbb;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      padding: 14px 8px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #d8b36a;
+      color: #111;
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 15px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    nav button {
+      background: #292929;
+      color: #fff;
+    }
+
+    nav button.active {
+      background: #d8b36a;
+      color: #111;
+    }
+
+    main {
+      max-width: 520px;
+      margin: auto;
+      padding: 10px 16px 40px;
+    }
+
+    .panel {
+      background: #1d1d1d;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 19px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 15px;
+      font-size: 21px;
+      color: #d8b36a;
+    }
+
+    p { line-height: 1.45; }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      color: #ddd;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #101010;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .full {
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .small {
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .hidden { display: none !important; }
+
+    .message {
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .error {
+      background: #4b2020;
+      color: #ffdada;
+    }
+
+    .success {
+      background: #183b29;
+      color: #d5ffe5;
+    }
+
+    #stamps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+      margin: 18px 0;
+    }
+
+    .stamp {
+      border: 2px solid #d8b36a;
+      border-radius: 50%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #d8b36a;
+    }
+
+    .stamp.filled {
+      background: #d8b36a;
+      color: #111;
+    }
+
+    #qr {
+      display: flex;
+      justify-content: center;
+      background: white;
+      padding: 12px;
+      margin: 16px auto;
+      width: max-content;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    .customer {
+      border-bottom: 1px solid #444;
+      padding: 12px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .customer:last-child { border-bottom: 0; }
+  </style>
 </head>
+
 <body>
+
 <header>
-<h1>GUIDO HAIR SALON</h1>
-<p>La tua carta fedeltà digitale</p>
+  <!-- LOGO VISIBILE DENTRO L'APP -->
+  <img
+    class="salon-logo"
+    src="./logo.jpeg"
+    alt="Logo Guido Hair Salon"
+  >
+
+  <h1>GUIDO HAIR SALON</h1>
+  <p>La tua carta fedeltà digitale</p>
 </header>
 
 <nav>
-<button class="active" data-page="register">Registrati</button>
-<button data-page="card">La mia tessera</button>
-<button data-page="admin">Area titolare</button>
+  <button class="active" data-page="register">Registrati</button>
+  <button data-page="card">La mia tessera</button>
+  <button data-page="admin">Area titolare</button>
 </nav>
 
 <main>
-<section id="register" class="page">
-<div class="panel">
-<h2>Registrazione cliente</h2>
-<p>Registrati per ricevere la tua carta fedeltà digitale.</p>
-<form id="registerForm">
-<label for="firstName">Nome</label>
-<input id="firstName" autocomplete="given-name" required>
-<label for="lastName">Cognome</label>
-<input id="lastName" autocomplete="family-name" required>
-<label for="phone">Numero di telefono</label>
-<input id="phone" type="tel" autocomplete="tel" required>
-<button class="full" type="submit">Crea la mia tessera</button>
-</form>
-<div id="registerMessage" aria-live="polite"></div>
-</div>
-</section>
 
-<section id="card" class="page hidden">
-<div class="panel">
-<h2>La mia tessera</h2>
-<label for="cardCode">Codice della tessera</label>
-<input id="cardCode" placeholder="Es. GHS-...">
-<button id="findCard" class="full">Visualizza tessera</button>
-<div id="cardMessage" aria-live="polite"></div>
-<div id="cardDetails" class="hidden">
-<h3 id="customerName"></h3>
-<p id="stampCount"></p>
-<div id="stamps"></div>
-<div id="qr"></div>
-<p class="small">Mostra questa tessera al titolare del salone.</p>
-</div>
-</div>
-</section>
+  <!-- REGISTRAZIONE CLIENTE -->
+  <section id="register" class="page">
+    <div class="panel">
+      <h2>Registrazione cliente</h2>
+      <p>Registrati per ricevere la tua carta fedeltà digitale.</p>
 
-<section id="admin" class="page hidden">
-<div class="panel" id="loginPanel">
-<h2>Accesso titolare</h2>
-<p class="small">Accedi con l'account autorizzato del salone.</p>
-<form id="loginForm">
-<label for="email">Email</label>
-<input id="email" type="email" autocomplete="username" required>
-<label for="password">Password</label>
-<input id="password" type="password" autocomplete="current-password" required>
-<button class="full" type="submit">Accedi</button>
-</form>
-<div id="loginMessage" aria-live="polite"></div>
-</div>
+      <form id="registerForm">
+        <label for="firstName">Nome</label>
+        <input id="firstName" autocomplete="given-name" required>
 
-<div class="panel hidden" id="adminPanel">
-<h2>Gestione clienti</h2>
-<button id="refreshCustomers">Aggiorna elenco clienti</button>
-<button id="logout" style="margin-left:5px">Esci</button>
-<div id="adminMessage" aria-live="polite"></div>
-<div id="customerList"></div>
-</div>
+        <label for="lastName">Cognome</label>
+        <input id="lastName" autocomplete="family-name" required>
 
-<div class="panel hidden" id="stampPanel">
-<h2>Aggiungi bollini</h2>
-<p class="small">Inserisci il codice della tessera e l'importo della spesa. Ogni 17 € valgono un bollino.</p>
-<label for="stampCode">Codice tessera</label>
-<input id="stampCode" placeholder="GHS-..." required>
-<label for="amount">Importo della spesa (€)</label>
-<input id="amount" type="number" min="17" step="0.01" placeholder="17" required>
-<button id="addStamp" class="full">Conferma bollini</button>
-<div id="stampMessage" aria-live="polite"></div>
-</div>
-</section>
+        <label for="phone">Numero di telefono</label>
+        <input id="phone" type="tel" autocomplete="tel" required>
+
+        <button class="full" type="submit">Crea la mia tessera</button>
+      </form>
+
+      <div id="registerMessage" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- TESSERA CLIENTE -->
+  <section id="card" class="page hidden">
+    <div class="panel">
+      <h2>La mia tessera</h2>
+
+      <label for="cardCode">Codice della tessera</label>
+      <input id="cardCode" placeholder="Es. GHS-...">
+
+      <button id="findCard" class="full">Visualizza tessera</button>
+
+      <div id="cardMessage" aria-live="polite"></div>
+
+      <div id="cardDetails" class="hidden">
+        <h3 id="customerName"></h3>
+        <p id="stampCount"></p>
+        <div id="stamps"></div>
+        <div id="qr"></div>
+        <p class="small">Mostra questa tessera al titolare del salone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AREA TITOLARE -->
+  <section id="admin" class="page hidden">
+
+    <div class="panel" id="loginPanel">
+      <h2>Accesso titolare</h2>
+      <p class="small">Accedi con l'account autorizzato del salone.</p>
+
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+
+        <button class="full" type="submit">Accedi</button>
+      </form>
+
+      <div id="loginMessage" aria-live="polite"></div>
+    </div>
+
+    <div class="panel hidden" id="adminPanel">
+      <h2>Gestione clienti</h2>
+      <button id="refreshCustomers">Aggiorna elenco clienti</button>
+      <button id="logout" style="margin-left:5px">Esci</button>
+      <div id="adminMessage" aria-live="polite"></div>
+      <div id="customerList"></div>
+    </div>
+
+    <div class="panel hidden" id="stampPanel">
+      <h2>Aggiungi bollini</h2>
+      <p class="small">
+        Inserisci il codice della tessera e l'importo della spesa.
+        Ogni 17 € valgono un bollino.
+      </p>
+
+      <label for="stampCode">Codice tessera</label>
+      <input id="stampCode" placeholder="GHS-..." required>
+
+      <label for="amount">Importo della spesa (€)</label>
+      <input id="amount" type="number" min="17" step="0.01" placeholder="17" required>
+
+      <button id="addStamp" class="full">Conferma bollini</button>
+      <div id="stampMessage" aria-live="polite"></div>
+    </div>
+
+  </section>
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <script>
 const SUPABASE_URL = "https://cmslipkgekqdgahsjxwk.supabase.co";
 const SUPABASE_KEY = "sb_publishable_X43dJ4nGagjQ5l2mYJdwig_4Ks72LzN";
 const API_URL = SUPABASE_URL + "/functions/v1/fidelity-api";
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 let currentSession = null;
 
-function showMessage(id, text, ok=false) {
+function showMessage(id, text, ok = false) {
   const el = document.getElementById(id);
   el.className = "message " + (ok ? "success" : "error");
   el.textContent = text;
 }
+
 function clearMessage(id) {
   const el = document.getElementById(id);
   el.textContent = "";
   el.className = "";
 }
+
 function showPage(page) {
-  document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
+  document.querySelectorAll(".page").forEach(el => {
+    el.classList.add("hidden");
+  });
+
   document.getElementById(page).classList.remove("hidden");
+
   document.querySelectorAll("nav button").forEach(btn => {
     btn.classList.toggle("active", btn.dataset.page === page);
   });
 }
+
 document.querySelectorAll("nav button").forEach(btn => {
   btn.addEventListener("click", () => showPage(btn.dataset.page));
 });
 
-async function apiRequest(payload, authenticated=false) {
+async function apiRequest(payload, authenticated = false) {
   const headers = {
     "Content-Type": "application/json",
     "apikey": SUPABASE_KEY
   };
+
   if (authenticated) {
-    if (!currentSession) throw new Error("Effettua prima l'accesso.");
+    if (!currentSession) {
+      throw new Error("Effettua prima l'accesso.");
+    }
+
     headers.Authorization = "Bearer " + currentSession.access_token;
   }
+
   const response = await fetch(API_URL, {
     method: "POST",
     headers,
     body: JSON.stringify(payload)
   });
+
   const result = await response.json().catch(() => ({}));
+
   if (!response.ok || result.error) {
-    throw new Error(result.error || "Errore del server (" + response.status + ").");
+    throw new Error(
+      result.error || "Errore del server (" + response.status + ")."
+    );
   }
+
   return result;
 }
 
 function getCustomer(result) {
   return result.customer || result.data || result;
 }
+
 function getCode(customer) {
   return customer.code || customer.customer_code || "";
 }
+
 function getStamps(customer) {
   return Number(customer.stamps || 0);
 }
@@ -188,34 +399,48 @@ function getStamps(customer) {
 function renderCard(customer) {
   const code = getCode(customer);
   const stamps = getStamps(customer);
+
   document.getElementById("cardDetails").classList.remove("hidden");
+
   document.getElementById("customerName").textContent =
     [customer.name, customer.last_name].filter(Boolean).join(" ") || "Cliente";
+
   document.getElementById("stampCount").textContent =
     "Bollini: " + stamps + " su 10";
+
   const holder = document.getElementById("stamps");
   holder.replaceChildren();
+
   for (let i = 0; i < 10; i++) {
     const circle = document.createElement("div");
     circle.className = "stamp" + (i < stamps ? " filled" : "");
     circle.textContent = i < stamps ? "★" : "·";
     holder.appendChild(circle);
   }
+
   const qr = document.getElementById("qr");
   qr.replaceChildren();
+
   if (window.QRCode && code) {
-    new QRCode(qr, {text: code, width: 180, height: 180});
+    new QRCode(qr, {
+      text: code,
+      width: 180,
+      height: 180
+    });
   } else {
     qr.textContent = code;
   }
+
   document.getElementById("cardCode").value = code;
 }
 
 document.getElementById("registerForm").addEventListener("submit", async event => {
   event.preventDefault();
   clearMessage("registerMessage");
+
   const button = event.submitter;
   button.disabled = true;
+
   try {
     const result = await apiRequest({
       action: "register",
@@ -223,15 +448,31 @@ document.getElementById("registerForm").addEventListener("submit", async event =
       last_name: document.getElementById("lastName").value.trim(),
       phone: document.getElementById("phone").value.trim()
     });
+
     const customer = getCustomer(result);
     const code = getCode(customer);
-    if (!code) throw new Error("Registrazione ricevuta, ma il codice tessera non è arrivato.");
+
+    if (!code) {
+      throw new Error(
+        "Registrazione ricevuta, ma il codice tessera non è arrivato."
+      );
+    }
+
     localStorage.setItem("ghs_customer_code", code);
     renderCard(customer);
-    showMessage("registerMessage", "Registrazione completata! La tua tessera è pronta.", true);
+
+    showMessage(
+      "registerMessage",
+      "Registrazione completata! La tua tessera è pronta.",
+      true
+    );
+
     showPage("card");
   } catch (error) {
-    showMessage("registerMessage", error.message || "Impossibile completare la registrazione.");
+    showMessage(
+      "registerMessage",
+      error.message || "Impossibile completare la registrazione."
+    );
   } finally {
     button.disabled = false;
   }
@@ -240,103 +481,161 @@ document.getElementById("registerForm").addEventListener("submit", async event =
 document.getElementById("findCard").addEventListener("click", async () => {
   clearMessage("cardMessage");
   document.getElementById("cardDetails").classList.add("hidden");
+
   const code = document.getElementById("cardCode").value.trim();
+
   if (!code) {
     showMessage("cardMessage", "Inserisci il codice della tessera.");
     return;
   }
+
   try {
-    const result = await apiRequest({action: "card", code});
+    const result = await apiRequest({
+      action: "card",
+      code
+    });
+
     renderCard(getCustomer(result));
   } catch (error) {
-    showMessage("cardMessage", error.message || "Tessera non trovata.");
+    showMessage(
+      "cardMessage",
+      error.message || "Tessera non trovata."
+    );
   }
 });
 
 document.getElementById("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
   clearMessage("loginMessage");
+
   try {
-    const {data, error} = await supabaseClient.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
       email: document.getElementById("email").value.trim(),
       password: document.getElementById("password").value
     });
+
     if (error) throw error;
+
     currentSession = data.session;
+
     document.getElementById("loginPanel").classList.add("hidden");
     document.getElementById("adminPanel").classList.remove("hidden");
     document.getElementById("stampPanel").classList.remove("hidden");
+
     await loadCustomers();
   } catch (error) {
-    showMessage("loginMessage", error.message || "Accesso non riuscito.");
+    showMessage(
+      "loginMessage",
+      error.message || "Accesso non riuscito."
+    );
   }
 });
 
 async function loadCustomers() {
   clearMessage("adminMessage");
+
   const list = document.getElementById("customerList");
   list.textContent = "Caricamento clienti...";
+
   try {
-    const result = await apiRequest({action: "admin_list"}, true);
-    const customers = Array.isArray(result) ? result :
-      (result.customers || result.data || []);
+    const result = await apiRequest({
+      action: "admin_list"
+    }, true);
+
+    const customers = Array.isArray(result)
+      ? result
+      : (result.customers || result.data || []);
+
     list.replaceChildren();
+
     if (!customers.length) {
       list.textContent = "Nessun cliente trovato.";
       return;
     }
+
     customers.forEach(customer => {
       const item = document.createElement("div");
       item.className = "customer";
+
       const name = document.createElement("strong");
-      name.textContent = [customer.name, customer.last_name].filter(Boolean).join(" ") || "Cliente";
+      name.textContent =
+        [customer.name, customer.last_name].filter(Boolean).join(" ") || "Cliente";
+
       const details = document.createElement("p");
       details.className = "small";
       details.textContent =
         "Telefono: " + (customer.phone || "—") +
         " · Bollini: " + getStamps(customer) + "/10" +
         " · Codice: " + getCode(customer);
+
       const selectButton = document.createElement("button");
       selectButton.textContent = "Seleziona tessera";
+
       selectButton.addEventListener("click", () => {
         document.getElementById("stampCode").value = getCode(customer);
         document.getElementById("amount").focus();
       });
+
       item.append(name, details, selectButton);
       list.appendChild(item);
     });
   } catch (error) {
     list.textContent = "";
-    showMessage("adminMessage", error.message || "Impossibile caricare i clienti.");
+
+    showMessage(
+      "adminMessage",
+      error.message || "Impossibile caricare i clienti."
+    );
   }
 }
-document.getElementById("refreshCustomers").addEventListener("click", loadCustomers);
+
+document.getElementById("refreshCustomers").addEventListener(
+  "click",
+  loadCustomers
+);
 
 document.getElementById("addStamp").addEventListener("click", async () => {
   clearMessage("stampMessage");
+
   const code = document.getElementById("stampCode").value.trim();
   const amount = Number(document.getElementById("amount").value);
+
   if (!code || !Number.isFinite(amount) || amount < 17) {
-    showMessage("stampMessage", "Inserisci un codice e una spesa di almeno 17 €.");
+    showMessage(
+      "stampMessage",
+      "Inserisci un codice e una spesa di almeno 17 €."
+    );
     return;
   }
+
   try {
     const result = await apiRequest({
       action: "add_stamp",
       code,
       amount
     }, true);
-    showMessage("stampMessage", "Operazione completata. " +
-      (result.message || "Aggiorna l'elenco per verificare i bollini."), true);
+
+    showMessage(
+      "stampMessage",
+      "Operazione completata. " +
+        (result.message || "Aggiorna l'elenco per verificare i bollini."),
+      true
+    );
+
     await loadCustomers();
   } catch (error) {
-    showMessage("stampMessage", error.message || "Impossibile aggiungere i bollini.");
+    showMessage(
+      "stampMessage",
+      error.message || "Impossibile aggiungere i bollini."
+    );
   }
 });
 
 document.getElementById("logout").addEventListener("click", async () => {
   await supabaseClient.auth.signOut();
+
   currentSession = null;
+
   document.getElementById("loginPanel").classList.remove("hidden");
   document.getElementById("adminPanel").classList.add("hidden");
   document.getElementById("stampPanel").classList.add("hidden");
@@ -344,7 +643,11 @@ document.getElementById("logout").addEventListener("click", async () => {
 });
 
 const savedCode = localStorage.getItem("ghs_customer_code");
-if (savedCode) document.getElementById("cardCode").value = savedCode;
+
+if (savedCode) {
+  document.getElementById("cardCode").value = savedCode;
+}
 </script>
+
 </body>
 </html>
