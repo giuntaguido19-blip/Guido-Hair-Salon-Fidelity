@@ -606,10 +606,39 @@ document.getElementById("logout").addEventListener("click", async () => {
   document.getElementById("stampPanel").classList.add("hidden");
   document.getElementById("password").value = "";
 });
+
+async function loadSavedCard() {
+  const code =
+    localStorage.getItem("ghs_customer_code") ||
+    document.getElementById("cardCode").value.trim();
+
+  if (!code) return;
+
+  document.getElementById("cardCode").value = code;
+  clearMessage("cardMessage");
+
+  try {
+    const result = await apiRequest({
+      action: "card",
+      code
+    });
+
+    renderCard(getCustomer(result));
+  } catch (error) {
+    showMessage(
+      "cardMessage",
+      "Tessera non caricata. Premi Visualizza tessera per riprovare."
+    );
+  }
+}
+
 const savedCode = localStorage.getItem("ghs_customer_code");
+
 if (savedCode) {
   document.getElementById("cardCode").value = savedCode;
+  loadSavedCard();
 }
+
 </script>
 </body>
 </html>
