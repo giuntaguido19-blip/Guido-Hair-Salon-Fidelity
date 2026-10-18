@@ -11,7 +11,6 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>Guido Hair Salon · Fedeltà</title>
-
 <style>
 :root{--bg:#101010;--panel:#1d1d1d;--gold:#c9a86a;--muted:#b4ada2}
 *{box-sizing:border-box}
@@ -46,39 +45,40 @@ button:disabled{opacity:.5}
 .qrwrap{display:flex;justify-content:center;background:white;border-radius:14px;padding:14px;margin:15px auto;max-width:250px;min-height:210px;align-items:center}
 .qrwrap img,.qrwrap canvas{max-width:100%;height:auto}
 .qrtext{text-align:center;font-size:12px;color:#ddd;overflow-wrap:anywhere}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:650px;margin:auto;padding:0 15px 20px}
-.tabs button{background:#252525;color:#ccc;border:1px solid #444}
+.tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-width:650px;margin:auto;padding:0 10px 12px}
+.tabs button{background:#252525;color:#ccc;border:1px solid #444;font-size:12px;padding:11px 4px;line-height:1.3;min-height:52px;overflow-wrap:anywhere}
 .tabs button.active{background:var(--gold);color:#111}
 footer{text-align:center;color:#777;font-size:11px;padding:8px 15px 25px}
 video{width:100%;border-radius:12px}
+@media(max-width:380px){.tabs{gap:4px;padding-left:7px;padding-right:7px}.tabs button{font-size:10px;padding:9px 2px}}
 </style>
 </head>
-
 <body>
 <header>
-<img src="./logo.jpeg" alt="Guido Hair Salon">
+<img src="./logo.jpeg" alt="Guido Hair Salon" onerror="this.style.display='none'">
 <p>CARTA FEDELTÀ DIGITALE</p>
 </header>
 
+<nav class="tabs" aria-label="Navigazione principale">
+<button class="active" data-page="registrationPage">📝 Registrazione cliente</button>
+<button data-page="cardPage">🎟️ La mia tessera</button>
+<button data-page="adminPage">🔒 Area riservata</button>
+</nav>
+
 <main>
-<section id="customerPage">
-<div class="card">
+<section id="registrationPage">
+<div class="card" id="registrationPanel">
 <div class="sub" style="color:var(--gold)">BENVENUTO NEL PROGRAMMA FEDELTÀ</div>
 <h1>La tua fedeltà viene premiata.</h1>
 <p class="sub">Ogni 17 € di spesa idonea = 1 bollino. Con 10 bollini ricevi un omaggio.</p>
-
-<h2>Registrati o recupera la tua tessera</h2>
+<h2>Registrati</h2>
 <label>Nome</label>
 <input class="field" id="regFirstName" autocomplete="given-name" placeholder="Mario">
-
 <label>Cognome</label>
 <input class="field" id="regLastName" autocomplete="family-name" placeholder="Rossi">
-
 <label>Numero di telefono</label>
 <input class="field" id="regPhone" type="tel" autocomplete="tel" placeholder="333 1234567">
-
 <button id="register">Crea la mia tessera</button>
-
 <div style="border-top:1px solid #393939;margin:18px 0"></div>
 <h2>Hai già una tessera?</h2>
 <label>Codice della tessera</label>
@@ -86,13 +86,17 @@ video{width:100%;border-radius:12px}
 <button id="recoverCard" class="secondary">Recupera la mia tessera</button>
 <p class="sub">La tessera viene recuperata dal database online. Conserva il codice personale.</p>
 </div>
+</section>
 
+<section id="cardPage" class="hidden">
+<div class="card" id="noCardPanel">
+<h1>La mia tessera</h1>
+<p class="sub">Registrati oppure recupera la tua tessera per visualizzare il QR personale e i bollini.</p>
+<button id="goRegister">Vai alla registrazione</button>
+</div>
 <div class="card hidden" id="myCard">
 <div class="row">
-<div>
-<div class="sub">LA TUA TESSERA</div>
-<div class="count"><span id="count">0</span><span class="sub"> / 10 bollini</span></div>
-</div>
+<div><div class="sub">LA TUA TESSERA</div><div class="count"><span id="count">0</span><span class="sub"> / 10 bollini</span></div></div>
 <span class="pill" id="status">In corso</span>
 </div>
 <div class="stamps" id="stamps"></div>
@@ -102,6 +106,7 @@ video{width:100%;border-radius:12px}
 <div class="qrwrap" id="qr"><span style="color:#333">Generazione QR…</span></div>
 <div class="qrtext" id="codeLabel"></div>
 <button id="saveCode" class="secondary">Mostra il mio codice</button>
+<button id="backToRegistration" class="secondary">Torna alla registrazione</button>
 </div>
 </section>
 
@@ -109,496 +114,38 @@ video{width:100%;border-radius:12px}
 <div class="card" id="adminLogin">
 <h1>Area riservata</h1>
 <p class="sub">Accesso esclusivo al titolare del salone.</p>
-
 <label>Email amministratore</label>
 <input class="field" id="adminEmail" type="email" autocomplete="username" placeholder="Email del titolare">
-
 <label>Password amministratore</label>
 <input class="field" id="adminPassword" type="password" autocomplete="current-password" placeholder="Password Supabase">
-
 <button id="adminUnlock">Accedi alla gestione</button>
-<p class="sub">Usa l'account amministratore già creato in Supabase Auth. Non creare la password da questa pagina.</p>
+<p class="sub">Usa l'account amministratore già creato in Supabase Auth.</p>
 </div>
-
 <div id="adminContent" class="hidden">
 <div class="card">
-<div class="row">
-<h1>Gestione salone</h1>
-<button id="adminLock" class="secondary" style="width:auto">Esci</button>
-</div>
+<div class="row"><h1>Gestione salone</h1><button id="adminLock" class="secondary" style="width:auto">Esci</button></div>
 <div class="notice" id="adminStatus">Connessione al database online.</div>
 </div>
-
 <div class="card">
-<div class="row">
-<h2>Clienti registrati</h2>
-<span class="pill" id="total">0</span>
-</div>
+<div class="row"><h2>Clienti registrati</h2><span class="pill" id="total">0</span></div>
 <button id="refreshCustomers" class="secondary">Aggiorna elenco</button>
 <div id="customers"></div>
 </div>
-
 <div class="card">
 <h2>Scansiona il QR del cliente</h2>
-<p class="sub">Consenti l'accesso alla fotocamera. In alternativa, puoi inserire il codice manualmente.</p>
+<p class="sub">Consenti l'accesso alla fotocamera. In alternativa, inserisci il codice manualmente.</p>
 <button id="startScanner">📷 Scansiona QR cliente</button>
 <button id="stopScanner" class="secondary hidden">Ferma scanner</button>
 <div id="reader"></div>
-
 <label>Codice cliente</label>
 <input class="field" id="scanCode" placeholder="GHS-ABC123" autocapitalize="characters">
-
 <label>Importo della spesa (€)</label>
 <input class="field" id="amount" type="number" min="17" step="0.01" value="17">
-
 <button id="addStamp">Conferma spesa e aggiungi bollino</button>
 <button id="removeStamp" class="danger">➖ Rimuovi un bollino</button>
-
-<p class="sub">Un bollino per ogni operazione di spesa idonea di almeno 17 €. La rimozione sottrae un solo bollino e non deve portare il totale sotto zero.</p>
+<p class="sub">Un bollino per ogni operazione di spesa idonea di almeno 17 €. La rimozione sottrae un solo bollino.</p>
 </div>
 </div>
 </section>
 </main>
-
-<nav class="tabs">
-<button class="active" data-page="customerPage">👤 Tessera cliente</button>
-<button data-page="adminPage">✂️ Area riservata</button>
-</nav>
 <footer>GUIDO HAIR SALON · Grazie per la tua fiducia</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://unpkg.com/html5-qrcode"></script>
-
-<script>
-"use strict";
-
-/* CONFIGURAZIONE SUPABASE */
-const SUPABASE_URL = "https://cmslipkgekqdgahsjxwk.supabase.co";
-const SUPABASE_KEY = "sb_publishable_X43dJ4nGagjQ5l2mYJdwig_4Ks72LzN";
-const API_URL = SUPABASE_URL + "/functions/v1/fidelity-api";
-
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
-const $ = id => document.getElementById(id);
-const CUSTOMER_CODE_KEY = "ghs_customer_code";
-let currentCustomer = null;
-let adminSession = null;
-let scanner = null;
-let scannerRunning = false;
-
-function setStatus(message) {
-  $("adminStatus").textContent = message;
-}
-
-function normalizeCode(value) {
-  return String(value || "").trim().toUpperCase();
-}
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[ch]));
-}
-
-async function apiRequest(action, data = {}, requiresAdmin = false) {
-  const headers = {
-    "Content-Type": "application/json",
-    "apikey": SUPABASE_KEY
-  };
-
-  if (requiresAdmin) {
-    if (!adminSession?.access_token) {
-      throw new Error("Devi accedere all'area riservata.");
-    }
-    headers.Authorization = "Bearer " + adminSession.access_token;
-  } else {
-    headers.Authorization = "Bearer " + SUPABASE_KEY;
-  }
-
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ action, ...data })
-  });
-
-  const text = await response.text();
-  let result;
-  try {
-    result = text ? JSON.parse(text) : {};
-  } catch {
-    throw new Error("Risposta del server non valida.");
-  }
-
-  if (!response.ok || result.error) {
-    throw new Error(result.error || result.message || "Errore del server.");
-  }
-  return result;
-}
-
-function getCustomer(result) {
-  if (!result) return null;
-  if (result.customer) return result.customer;
-  if (result.data?.customer) return result.data.customer;
-  if (result.data && result.data.code) return result.data;
-  if (result.code) return result;
-  return null;
-}
-
-function getCustomers(result) {
-  if (Array.isArray(result.customers)) return result.customers;
-  if (Array.isArray(result.data?.customers)) return result.data.customers;
-  if (Array.isArray(result.data)) return result.data;
-  return [];
-}
-
-function customerCode(customer) {
-  return normalizeCode(customer.code || customer.customer_code || "");
-}
-
-function customerStamps(customer) {
-  const value = Number(customer.stamps ?? customer.bollini ?? 0);
-  return Math.max(0, Math.min(10, value));
-}
-
-function renderQR(code) {
-  $("qr").innerHTML = "";
-  if (!window.QRCode) {
-    $("qr").textContent = "QR non disponibile: verifica la connessione.";
-    return;
-  }
-  new QRCode($("qr"), {
-    text: code,
-    width: 210,
-    height: 210,
-    colorDark: "#111111",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
-  $("codeLabel").textContent = "Codice tessera: " + code;
-}
-
-function drawCard(customer) {
-  const code = customerCode(customer);
-  if (!code) throw new Error("Il server non ha restituito il codice della tessera.");
-
-  currentCustomer = customer;
-  currentCustomer.code = code;
-  currentCustomer.stamps = customerStamps(customer);
-
-  localStorage.setItem(CUSTOMER_CODE_KEY, code);
-  $("myCard").classList.remove("hidden");
-  $("count").textContent = currentCustomer.stamps;
-  $("status").textContent = currentCustomer.stamps >= 10 ? "Premio pronto" : "In corso";
-  $("message").textContent = currentCustomer.stamps >= 10
-    ? "Complimenti! Hai raggiunto 10 bollini. Mostra la tessera al salone per il tuo omaggio."
-    : "Ti mancano " + (10 - currentCustomer.stamps) + " bollini per ricevere il tuo omaggio.";
-
-  $("stamps").innerHTML = "";
-  for (let i = 0; i < 10; i++) {
-    const stamp = document.createElement("div");
-    stamp.className = "stamp" + (i < currentCustomer.stamps ? " done" : "");
-    stamp.innerHTML = "<span>" + (i + 1) + "</span>";
-    $("stamps").appendChild(stamp);
-  }
-
-  renderQR(code);
-}
-
-async function recoverCard(code) {
-  code = normalizeCode(code);
-  if (!code) throw new Error("Inserisci il codice della tua tessera.");
-
-  const result = await apiRequest("card", { code });
-  const customer = getCustomer(result);
-  if (!customer) throw new Error("Tessera non trovata. Controlla il codice.");
-
-  drawCard(customer);
-  return customer;
-}
-
-$("register").addEventListener("click", async () => {
-  const firstName = $("regFirstName").value.trim();
-  const lastName = $("regLastName").value.trim();
-  const phone = $("regPhone").value.trim();
-
-  if (!firstName || !lastName || !phone) {
-    alert("Compila nome, cognome e numero di telefono.");
-    return;
-  }
-  if (!/^[+0-9 ()-]{7,20}$/.test(phone)) {
-    alert("Inserisci un numero di telefono valido.");
-    return;
-  }
-
-  const button = $("register");
-  button.disabled = true;
-
-  try {
-    const result = await apiRequest("register", {
-      name: firstName,
-      last_name: lastName,
-      phone
-    });
-
-    const customer = getCustomer(result);
-    if (!customer) {
-      throw new Error("Registrazione inviata, ma il server non ha restituito la tessera. Controlla il formato della risposta dell'API.");
-    }
-
-    drawCard(customer);
-    alert("Registrazione completata! La tua tessera è pronta.");
-  } catch (error) {
-    alert("Non è stato possibile registrarti: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-$("recoverCard").addEventListener("click", async () => {
-  try {
-    const customer = await recoverCard($("recoverCode").value);
-    $("recoverCode").value = customerCode(customer);
-  } catch (error) {
-    alert(error.message);
-  }
-});
-
-$("saveCode").addEventListener("click", () => {
-  if (!currentCustomer) return;
-  $("recoverCode").value = customerCode(currentCustomer);
-  alert("Il codice della tua tessera è: " + customerCode(currentCustomer) +
-    "\nConservalo per recuperare la tessera.");
-});
-
-/* LOGIN AMMINISTRATORE: account esistente in Supabase Auth */
-$("adminUnlock").addEventListener("click", async () => {
-  const email = $("adminEmail").value.trim();
-  const password = $("adminPassword").value;
-  if (!email || !password) {
-    alert("Inserisci email e password.");
-    return;
-  }
-
-  $("adminUnlock").disabled = true;
-  try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-    if (error) throw error;
-
-    adminSession = data.session;
-    if (!adminSession) throw new Error("Sessione amministratore non disponibile.");
-
-    $("adminPassword").value = "";
-    $("adminLogin").classList.add("hidden");
-    $("adminContent").classList.remove("hidden");
-    setStatus("Accesso effettuato. Caricamento clienti…");
-    await refreshCustomers();
-  } catch (error) {
-    adminSession = null;
-    alert("Accesso non riuscito: " + error.message);
-  } finally {
-    $("adminUnlock").disabled = false;
-  }
-});
-
-async function logoutAdmin() {
-  try {
-    await stopScanner();
-    await supabaseClient.auth.signOut();
-  } catch (_) {}
-  adminSession = null;
-  $("adminContent").classList.add("hidden");
-  $("adminLogin").classList.remove("hidden");
-  setStatus("Accesso terminato.");
-}
-
-$("adminLock").addEventListener("click", logoutAdmin);
-
-async function refreshCustomers() {
-  try {
-    const result = await apiRequest("admin_list", {}, true);
-    const customers = getCustomers(result);
-
-    $("total").textContent = customers.length;
-    $("customers").innerHTML = "";
-
-    if (!customers.length) {
-      $("customers").innerHTML = '<p class="sub">Nessun cliente trovato.</p>';
-    }
-
-    customers.slice().reverse().forEach(customer => {
-      const code = customerCode(customer);
-      const first = customer.name || customer.first_name || "";
-      const last = customer.last_name || "";
-      const phone = customer.phone || "Non indicato";
-      const stamps = customerStamps(customer);
-      const div = document.createElement("div");
-      div.className = "customer";
-      div.innerHTML =
-        "<strong>" + escapeHTML(first) + " " + escapeHTML(last) + "</strong>" +
-        '<small>Telefono: ' + escapeHTML(phone) +
-        "<br>Codice: " + escapeHTML(code) +
-        "<br>Bollini: " + stamps + "/10</small>" +
-        '<button class="secondary" type="button">Seleziona cliente</button>';
-
-      div.querySelector("button").addEventListener("click", () => {
-        $("scanCode").value = code;
-        $("amount").focus();
-      });
-      $("customers").appendChild(div);
-    });
-
-    setStatus("Elenco aggiornato dal database online.");
-  } catch (error) {
-    setStatus("Errore caricamento clienti: " + error.message);
-  }
-}
-
-$("refreshCustomers").addEventListener("click", refreshCustomers);
-
-/* SCANNER QR */
-async function stopScanner() {
-  if (scanner && scannerRunning) {
-    try {
-      await scanner.stop();
-      await scanner.clear();
-    } catch (_) {}
-  }
-  scannerRunning = false;
-  $("reader").innerHTML = "";
-  $("startScanner").classList.remove("hidden");
-  $("stopScanner").classList.add("hidden");
-}
-
-$("startScanner").addEventListener("click", async () => {
-  if (!adminSession) {
-    alert("Accedi prima all'area riservata.");
-    return;
-  }
-  if (!window.Html5Qrcode) {
-    alert("Scanner non disponibile. Inserisci manualmente il codice QR.");
-    return;
-  }
-
-  try {
-    $("startScanner").classList.add("hidden");
-    $("stopScanner").classList.remove("hidden");
-    scanner = new Html5Qrcode("reader");
-
-    await scanner.start(
-      { facingMode: "environment" },
-      { fps: 10, qrbox: { width: 230, height: 230 } },
-      async decodedText => {
-        $("scanCode").value = normalizeCode(decodedText);
-        await stopScanner();
-        alert("QR letto. Verifica il codice e conferma la spesa.");
-      },
-      () => {}
-    );
-    scannerRunning = true;
-  } catch (error) {
-    await stopScanner();
-    alert("Impossibile avviare la fotocamera. Controlla i permessi del browser e riprova.");
-  }
-});
-
-$("stopScanner").addEventListener("click", stopScanner);
-
-/* AGGIUNTA BOLLINO */
-$("addStamp").addEventListener("click", async () => {
-  if (!adminSession) return alert("Accedi all'area riservata.");
-
-  const code = normalizeCode($("scanCode").value);
-  const amount = Number($("amount").value);
-
-  if (!code) return alert("Scansiona il QR o inserisci il codice cliente.");
-  if (!Number.isFinite(amount) || amount < 17) {
-    return alert("La spesa deve essere di almeno 17 €.");
-  }
-
-  const button = $("addStamp");
-  button.disabled = true;
-
-  try {
-    const result = await apiRequest("add_stamp", { code, amount }, true);
-    await refreshCustomers();
-
-    if (currentCustomer && customerCode(currentCustomer) === code) {
-      try { await recoverCard(code); } catch (_) {}
-    }
-
-    alert(result.message || "Operazione completata. Verifica il saldo aggiornato.");
-  } catch (error) {
-    alert("Non è stato possibile aggiungere il bollino: " + error.message);
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* RIMOZIONE BOLLINO: richiede il supporto di fidelity-api */
-$("removeStamp").addEventListener("click", async () => {
-  if (!adminSession) return alert("Accedi all'area riservata.");
-
-  const code = normalizeCode($("scanCode").value);
-  if (!code) return alert("Inserisci o scansiona il codice cliente.");
-
-  if (!confirm("Vuoi rimuovere un solo bollino da questa tessera?")) return;
-
-  const button = $("removeStamp");
-  button.disabled = true;
-
-  try {
-    const result = await apiRequest("remove_stamp", { code }, true);
-    await refreshCustomers();
-
-    if (currentCustomer && customerCode(currentCustomer) === code) {
-      try { await recoverCard(code); } catch (_) {}
-    }
-
-    alert(result.message || "Richiesta completata. Verifica il saldo aggiornato.");
-  } catch (error) {
-    alert("Rimozione non disponibile: " + error.message +
-      "\nLa funzione fidelity-api deve supportare l'azione remove_stamp.");
-  } finally {
-    button.disabled = false;
-  }
-});
-
-/* NAVIGAZIONE */
-document.querySelectorAll(".tabs button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".tabs button").forEach(item => {
-      item.classList.toggle("active", item === button);
-    });
-
-    const page = button.dataset.page;
-    $("customerPage").classList.toggle("hidden", page !== "customerPage");
-    $("adminPage").classList.toggle("hidden", page !== "adminPage");
-  });
-});
-
-/* RIPRISTINO TESSERA SALVATA SU QUESTO DISPOSITIVO */
-(async function restoreCard() {
-  const savedCode = localStorage.getItem(CUSTOMER_CODE_KEY);
-  if (!savedCode) return;
-
-  $("recoverCode").value = savedCode;
-  try {
-    await recoverCard(savedCode);
-  } catch (_) {
-    /* Il cliente può recuperare la tessera inserendo di nuovo il codice. */
-  }
-})();
-
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-  navigator.serviceWorker.register("./sw.js").catch(() => {});
-}
-</script>
-</body>
-</html>
